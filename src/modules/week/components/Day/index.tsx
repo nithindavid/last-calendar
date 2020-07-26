@@ -17,9 +17,15 @@ export const Day: FC<DayProps> = memo((props) => {
   const hourEntries = useHourEntries(date);
   const eventCount = events.length;
   const eventsForDay = (hourInDate: Date) =>
-    events.filter(
-      (event) => hourInDate >= event.from && hourInDate <= event.to
-    );
+    events.filter((event) => {
+      const fromHour = new Date(
+        new Date(event.from).setHours(new Date(event.from).getHours(), 0, 0, 0)
+      );
+      const toHour = new Date(
+        new Date(event.to).setHours(new Date(event.to).getHours() + 1, 0, 0, 0)
+      );
+      return +fromHour <= +hourInDate && +hourInDate <= +toHour;
+    });
 
   return (
     <Paper square>

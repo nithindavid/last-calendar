@@ -29,9 +29,6 @@ export const DayHead: FC<DayHeadProps> = memo((props) => {
     >
       <Typography variant="h6" gutterBottom>
         {nameOfDay}
-        {showChip && (
-          <Chip color="secondary" size="small" label={`${count} events`} />
-        )}
       </Typography>
       <Box
         display="flex"
@@ -40,6 +37,16 @@ export const DayHead: FC<DayHeadProps> = memo((props) => {
         className={classes.circle}
       >
         {dateOfMonth}
+      </Box>
+      <Box className={classes.chipWrap}>
+        {showChip && (
+          <Chip
+            className={classes.chip}
+            color="secondary"
+            size="small"
+            label={`${count} events`}
+          />
+        )}
       </Box>
     </Box>
   );

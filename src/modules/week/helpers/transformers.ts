@@ -8,7 +8,7 @@ export const getEventsByDate = (events: Array<EventProps>) =>
     const fromDate = new Date(event.from);
     const toDate = new Date(event.to);
 
-    var currentDate = new Date(fromDate);
+    const currentDate = new Date(fromDate);
     while (currentDate <= toDate) {
       const curDateString = +currentDate.setHours(0, 0, 0, 0);
       const dateObj = acc[curDateString];
@@ -19,7 +19,7 @@ export const getEventsByDate = (events: Array<EventProps>) =>
         acc[curDateString] = [event];
       }
 
-      currentDate = currentDate.addDays(1);
+      currentDate.setDate(currentDate.getDate() + 1);
     }
     return acc;
   }, {});

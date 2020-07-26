@@ -12,9 +12,11 @@ export const useStyles = makeStyles((theme) => ({
     paddingTop: theme.spacing(),
     boxSizing: "border-box",
     borderLeft: `1px solid ${theme.palette.common.white}`,
+    fontSize: 12,
   },
   gridContainer: {
     height: "100%",
-    alignItems: "strech",
+    alignItems: "stretch",
+    flexWrap: "nowrap",
   },
 }));

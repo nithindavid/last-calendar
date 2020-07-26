@@ -4,19 +4,6 @@ import "./index.css";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 
-declare global {
-  interface Date {
-    addDays(days?: number): Date;
-  }
-}
-
-// eslint-disable-next-line no-extend-native
-Date.prototype.addDays = function (days = 0) {
-  var date = new Date(this.valueOf());
-  date.setDate(date.getDate() + days);
-  return date;
-};
-
 ReactDOM.render(
   <React.StrictMode>
     <App />
