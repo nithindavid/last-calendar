@@ -1,6 +1,5 @@
-import React, { FC } from "react";
+import React, { FC, memo } from "react";
 
-import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
@@ -8,32 +7,26 @@ import Button from "@material-ui/core/Button";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
 
-const useStyles = makeStyles((theme) => ({
-  appBar: {
-    background: theme.palette.common.white,
-  },
-  title: {
-    flexGrow: 1,
-  },
-  nextButton: {
-    marginLeft: theme.spacing(),
-  },
-}));
+import { useStyles } from "./styles";
 
 type HeaderProps = {
+  month: String;
   onNext: Function;
   onPrev: Function;
 };
 
-export const Header: FC<HeaderProps> = (props) => {
+export const Header: FC<HeaderProps> = memo((props) => {
   const classes = useStyles();
 
-  const { onNext = () => {}, onPrev = () => {} } = props;
+  const { month = "", onNext = () => {}, onPrev = () => {} } = props;
   return (
     <AppBar position="static" className={classes.appBar} color="inherit">
       <Toolbar>
         <Typography variant="h6" className={classes.title} align="left">
           Last Calendar
+        </Typography>
+        <Typography variant="h5" className={classes.title} align="left">
+          {month}
         </Typography>
         <Button
           variant="outlined"
@@ -55,4 +48,4 @@ export const Header: FC<HeaderProps> = (props) => {
       </Toolbar>
     </AppBar>
   );
-};
+});

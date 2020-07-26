@@ -2,21 +2,11 @@ import React, { FC, memo } from "react";
 import Paper from "@material-ui/core/Paper";
 import Box from "@material-ui/core/Box";
 import Typography from "@material-ui/core/Typography";
-import { makeStyles } from "@material-ui/core/styles";
 
-const useStyles = makeStyles((theme) => ({
-  wrap: {
-    marginTop: 120,
-  },
-  hourWrap: {
-    height: 80,
-    boxSizing: "border-box",
-    width: 80,
-    borderTop: `1px solid ${theme.palette.divider}`,
-  },
-}));
+import { useStyles } from "./styles";
 
 export const TimeGuide: FC = memo(() => {
+  // Generate array numbers from 0...23
   const hourEntries: Array<number> = Array.from(Array(24).keys());
   const classes = useStyles();
 

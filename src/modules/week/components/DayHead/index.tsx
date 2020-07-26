@@ -1,32 +1,22 @@
 import React, { FC, memo } from "react";
 import Box from "@material-ui/core/Box";
-import { makeStyles } from "@material-ui/core/styles";
-
 import Typography from "@material-ui/core/Typography";
+import Chip from "@material-ui/core/Chip";
 
-import { DAYS } from "modules/week/constants";
-type DayHeadProps = { date: Date };
-const useStyles = makeStyles((theme) => ({
-  wrap: {
-    height: 120,
-    boxSizing: "border-box",
-  },
-  circle: {
-    height: 40,
-    width: 40,
-    background: theme.palette.primary.main,
-    color: theme.palette.common.white,
-    borderRadius: 64,
-  },
-}));
+import { DAYS } from "modules/week/helpers/constants";
+
+import { useStyles } from "./styles";
+
+type DayHeadProps = { date: Date; count: Number };
 
 export const DayHead: FC<DayHeadProps> = memo((props) => {
-  const { date } = props;
+  const { date, count = 0 } = props;
   const classes = useStyles();
 
   const dayOfWeek = date.getDay();
   const nameOfDay = DAYS[dayOfWeek];
   const dateOfMonth = date.getDate();
+  const showChip = count > 0;
 
   return (
     <Box
@@ -39,6 +29,9 @@ export const DayHead: FC<DayHeadProps> = memo((props) => {
     >
       <Typography variant="h6" gutterBottom>
         {nameOfDay}
+        {showChip && (
+          <Chip color="secondary" size="small" label={`${count} events`} />
+        )}
       </Typography>
       <Box
         display="flex"

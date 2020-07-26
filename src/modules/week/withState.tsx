@@ -1,7 +1,10 @@
 import React, { FC, useState } from "react";
-import { WeekView } from "./index";
+
+import { useEventsByDate } from "modules/week/helpers/hooks";
+import { WeekView } from "modules/week/";
 
 type EventProps = {
+  id: String;
   name: String;
   from: Date;
   to: Date;
@@ -11,14 +14,24 @@ type EventProps = {
 export const WeekViewWithState: FC = (props) => {
   const now = new Date();
   const [startDate, setStartDate] = useState<Date>(now);
+  const today = 1595757219930;
   const events: Array<EventProps> = [
     {
+      id: "random1",
       name: "Nithin 25th birthday",
-      from: new Date(),
-      to: new Date(new Date().setHours(17)),
-      color: "red",
+      from: new Date(today),
+      to: new Date(new Date(today).setHours(18)),
+      color: "#FCCFF4",
+    },
+    {
+      id: "random2",
+      name: "Juan 25th birthday",
+      from: new Date(today),
+      to: new Date(new Date(today).setHours(19)),
+      color: "#B4F1B3",
     },
   ];
+  const eventsByDate = useEventsByDate(events);
 
   const handleOnNext = () => {
     const nextWeekStartDate = new Date(startDate);
@@ -38,7 +51,7 @@ export const WeekViewWithState: FC = (props) => {
   return (
     <>
       <WeekView
-        events={events}
+        eventsByDate={eventsByDate}
         startDate={startDate}
         onPrev={handleOnPrev}
         onNext={handleOnNext}

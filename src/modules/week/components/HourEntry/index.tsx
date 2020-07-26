@@ -1,21 +1,16 @@
 import React, { FC, memo } from "react";
+
+import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import Box from "@material-ui/core/Box";
-import { makeStyles } from "@material-ui/core/styles";
+import { EventProps } from "modules/week/types";
 
-import Typography from "@material-ui/core/Typography";
+import { useStyles } from "./styles";
 
-type EventProps = { name: String; color: String };
-type HourEntryProps = { date: Date; events: Array<EventProps> };
-
-const useStyles = makeStyles((theme) => ({
-  hourWrap: {
-    height: 80,
-    boxSizing: "border-box",
-    width: "100%",
-    borderTop: `1px solid ${theme.palette.divider}`,
-  },
-}));
+type HourEntryProps = {
+  date: Date;
+  events: Array<EventProps>;
+};
 
 export const HourEntry: FC<HourEntryProps> = memo((props) => {
   const { date, events = [] } = props;
@@ -23,10 +18,24 @@ export const HourEntry: FC<HourEntryProps> = memo((props) => {
 
   return (
     <Box className={classes.hourWrap}>
-      {events.map((event) => {
-        const { name = "Random", color = "blue" } = event;
-        return <Paper>{name}</Paper>;
-      })}
+      <Grid className={classes.gridContainer} container spacing={0}>
+        {events.map((event) => {
+          const { id = "", name = "", color = "#FCCFF4" } = event;
+          const key = `${+date}_${id}`;
+          return (
+            <Grid key={key} xs item>
+              <Paper
+                square
+                elevation={0}
+                className={classes.eventPaper}
+                style={{ background: color as string }}
+              >
+                {name}
+              </Paper>
+            </Grid>
+          );
+        })}
+      </Grid>
     </Box>
   );
 });

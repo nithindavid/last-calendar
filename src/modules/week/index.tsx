@@ -1,17 +1,14 @@
 import React, { FC } from "react";
+
 import { Week } from "modules/week/components/Week";
 import { Header } from "modules/week/components/Header";
 
-type EventProps = {
-  name: String;
-  from: Date;
-  to: Date;
-  color: String;
-};
+import { EventProps } from "modules/week/types";
+import { MONTHS } from "modules/week/helpers/constants";
 
 type WeekViewProps = {
   startDate: Date;
-  events: Array<EventProps>;
+  eventsByDate: { [date: number]: EventProps[] };
   onNext: Function;
   onPrev: Function;
 };
@@ -19,14 +16,16 @@ type WeekViewProps = {
 export const WeekView: FC<WeekViewProps> = (props) => {
   const {
     startDate = new Date(),
-    events = [],
+    eventsByDate = {},
     onPrev = () => {},
     onNext = () => {},
   } = props;
+
+  const currentMonth = MONTHS[startDate.getMonth()];
   return (
     <>
-      <Header onNext={onNext} onPrev={onPrev} />
-      <Week events={events} startDate={startDate} />
+      <Header month={currentMonth} onNext={onNext} onPrev={onPrev} />
+      <Week eventsByDate={eventsByDate} startDate={startDate} />
     </>
   );
 };
