@@ -1,7 +1,12 @@
-import { useMemo } from "react";
+import { useMemo, useCallback } from "react";
+import { EventProps } from "modules/week/types";
 
-export const useHourEntries = (date: Date) =>
-  useMemo(() => {
+const resetHourForDate = (date: Date) =>
+  new Date(new Date(date).setHours(new Date(date).getHours(), 0, 0, 0));
+
+export const useHourEntries = (date: Date) => {
+  const dependancy = `${date.getHours()}${date.getMinutes()}`;
+  return useMemo(() => {
     const startOfDay = new Date(date);
     startOfDay.setHours(0, 0, 0, 0);
 
@@ -17,5 +22,19 @@ export const useHourEntries = (date: Date) =>
       const nextHour = currentHour + 1;
       eachHourInDay.setHours(nextHour);
     }
+
     return hourEntries;
-  }, [+date]);
+  }, [dependancy]);
+};
+
+export const useEventsForHour = (events: EventProps[]) =>
+  useCallback(
+    (hourInDate: Date) =>
+      events.filter((event) => {
+        const fromHour = resetHourForDate(event.from);
+        const toHour = resetHourForDate(event.to);
+
+        return +fromHour <= +hourInDate && +hourInDate <= +toHour;
+      }),
+    [events]
+  );

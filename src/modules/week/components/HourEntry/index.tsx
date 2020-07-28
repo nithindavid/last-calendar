@@ -1,4 +1,4 @@
-import React, { FC, memo } from "react";
+import React, { FC } from "react";
 
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
@@ -6,13 +6,14 @@ import Box from "@material-ui/core/Box";
 import { EventProps } from "modules/week/types";
 
 import { useStyles } from "./styles";
+import { Typography } from "@material-ui/core";
 
 type HourEntryProps = {
   date: Date;
   events: Array<EventProps>;
 };
 
-export const HourEntry: FC<HourEntryProps> = memo((props) => {
+export const HourEntry: FC<HourEntryProps> = (props) => {
   const { date, events = [] } = props;
   const classes = useStyles();
 
@@ -22,6 +23,14 @@ export const HourEntry: FC<HourEntryProps> = memo((props) => {
         {events.map((event) => {
           const { id = "", name = "", color = "#FCCFF4" } = event;
           const key = `${+date}_${id}`;
+          const isFirstCard =
+            +new Date(event.from).setMinutes(0, 0, 0) ===
+            +new Date(date).setMinutes(0, 0, 0);
+
+          const formatedHour = ("0" + event.from.getHours()).slice(-2);
+          const formatedMinute = ("0" + event.from.getMinutes()).slice(-2);
+          const eventStartTime = `${formatedHour}:${formatedMinute}`;
+
           return (
             <Grid key={key} xs item>
               <Paper
@@ -30,7 +39,15 @@ export const HourEntry: FC<HourEntryProps> = memo((props) => {
                 className={classes.eventPaper}
                 style={{ background: color as string }}
               >
-                {name}
+                {isFirstCard && (
+                  <>
+                    <Typography variant="body2">
+                      <strong>{eventStartTime}</strong>
+                      {"  "}
+                      {name}
+                    </Typography>
+                  </>
+                )}
               </Paper>
             </Grid>
           );
@@ -38,4 +55,4 @@ export const HourEntry: FC<HourEntryProps> = memo((props) => {
       </Grid>
     </Box>
   );
-});
+};

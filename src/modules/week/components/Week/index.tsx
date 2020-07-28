@@ -1,4 +1,4 @@
-import React, { FC, memo } from "react";
+import React, { FC } from "react";
 
 import Box from "@material-ui/core/Box";
 import Grid from "@material-ui/core/Grid";
@@ -15,7 +15,7 @@ type WeekProps = {
   eventsByDate: { [date: number]: EventProps[] };
 };
 
-export const Week: FC<WeekProps> = memo((props) => {
+export const Week: FC<WeekProps> = (props) => {
   const { startDate, eventsByDate = {} } = props;
   const dayEntries = useDaysOfWeek(startDate);
 
@@ -31,4 +31,4 @@ export const Week: FC<WeekProps> = memo((props) => {
       </Grid>
     </Box>
   );
-});
+};

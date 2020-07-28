@@ -5,7 +5,7 @@ import { HourEntry } from "modules/week/components/HourEntry";
 import { DayHead } from "modules/week/components/DayHead";
 import { EventProps } from "modules/week/types";
 
-import { useHourEntries } from "./hooks";
+import { useHourEntries, useEventsForHour } from "./hooks";
 
 type DayProps = {
   date: Date;
@@ -16,16 +16,7 @@ export const Day: FC<DayProps> = memo((props) => {
   const { date, events = [] } = props;
   const hourEntries = useHourEntries(date);
   const eventCount = events.length;
-  const eventsForDay = (hourInDate: Date) =>
-    events.filter((event) => {
-      const fromHour = new Date(
-        new Date(event.from).setHours(new Date(event.from).getHours(), 0, 0, 0)
-      );
-      const toHour = new Date(
-        new Date(event.to).setHours(new Date(event.to).getHours() + 1, 0, 0, 0)
-      );
-      return +fromHour <= +hourInDate && +hourInDate <= +toHour;
-    });
+  const eventsForHour = useEventsForHour(events);
 
   return (
     <Paper square>
@@ -34,7 +25,7 @@ export const Day: FC<DayProps> = memo((props) => {
         return (
           <HourEntry
             key={+hourInDate}
-            events={eventsForDay(hourInDate)}
+            events={eventsForHour(hourInDate)}
             date={hourInDate}
           />
         );
