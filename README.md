@@ -1,4 +1,5 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Last Calendar
+Last calendar you will ever need to manage you weekly schedules and events.
 
 ## To start the project
 
