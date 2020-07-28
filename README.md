@@ -1,6 +1,10 @@
 # Last Calendar
 Last calendar you will ever need to manage you weekly schedules and events.
 
+
+![image](https://user-images.githubusercontent.com/1277421/88707335-b9da9700-d12f-11ea-8049-4ab15216f4df.png)
+
+
 ## To start the project
 
 In the project directory, you can run:
